@@ -10,6 +10,9 @@ A specialized language model focused on cryptocurrency knowledge, optimized to r
 - 💬 **Interactive Interfaces**: CLI chat and web-based Gradio UI
 - 🔧 **Customizable**: Adjustable generation parameters and model options
 - 📚 **Built-in Knowledge Base**: Cryptocurrency glossary, Q&A pairs, and example prompts
+- 📈 **Trading Assistant**: Specialized mode for technical analysis and trade ideas
+- 🎓 **Fine-tuning Support**: Train on your own trading strategies with LoRA/PEFT
+- 💹 **Trading Knowledge**: Technical indicators, chart patterns, risk management
 
 ## Quick Start
 
@@ -147,6 +150,69 @@ Compare responses from different models:
 python examples/compare_models.py
 ```
 
+## 📈 Trading Features
+
+### Trading Assistant
+
+Specialized mode for cryptocurrency trading analysis:
+
+```bash
+# Interactive trading assistant
+python trading_assistant.py
+
+# Analyze a specific coin
+python trading_assistant.py --analyze BTC
+
+# Generate trade idea
+python trading_assistant.py --trade ETH
+```
+
+**Features:**
+- Technical analysis with support/resistance levels
+- Trade setup generation (entry, stop loss, take profit)
+- Risk management calculations
+- Indicator explanations
+- Strategy recommendations
+
+### Fine-tuning for Trading
+
+**Train the model on YOUR trading strategies!**
+
+```bash
+# Step 1: Generate example dataset
+python trading_knowledge.py
+
+# Step 2: Prepare your training data
+python prepare_training_data.py --output datasets/my_trades.json --split
+
+# Step 3: Fine-tune the model
+python finetune.py --dataset datasets/my_trades_train.json --output ./my_trading_model
+
+# Step 4: Use your custom model
+python trading_assistant.py --model ./my_trading_model --finetuned
+```
+
+**What you can teach it:**
+- ✅ Your trading strategies and rules
+- ✅ Market analysis techniques
+- ✅ Risk management principles
+- ✅ Pattern recognition
+- ✅ Your trading journal insights
+
+**See [TRAINING_GUIDE.md](TRAINING_GUIDE.md) for complete fine-tuning instructions.**
+
+### Can It Learn to Trade Autonomously?
+
+**Fine-tuning teaches it ABOUT trading** (explaining strategies, analyzing markets).
+
+**For autonomous trading**, you would need:
+- Reinforcement learning (not just fine-tuning)
+- Live market data integration
+- Order execution system
+- Extensive backtesting
+
+Our fine-tuning creates an **AI trading mentor**, not an autonomous trading bot.
+
 ## Knowledge Base
 
 CryptoLLM covers a wide range of cryptocurrency topics:
@@ -280,17 +346,28 @@ Ensure you have enough disk space and a stable internet connection.
 
 ```
 cannaflux/
-├── crypto_llm.py           # Main LLM class and CLI
-├── crypto_knowledge.py     # Knowledge base and prompts
-├── web_interface.py        # Gradio web UI
-├── models_config.json      # Model specifications
-├── requirements.txt        # Python dependencies
-├── .env.example           # Environment template
-├── examples/              # Example scripts
+├── crypto_llm.py                    # Main LLM class and CLI
+├── crypto_knowledge.py              # General crypto knowledge base
+├── trading_knowledge.py             # Trading-specific knowledge and datasets
+├── web_interface.py                 # Gradio web UI
+├── trading_assistant.py             # Trading-focused interface
+├── finetune.py                      # Fine-tuning script (LoRA/PEFT)
+├── prepare_training_data.py         # Dataset preparation tool
+├── models_config.json               # Model specifications
+├── requirements.txt                 # Python dependencies
+├── .env.example                     # Environment template
+├── setup.sh                         # Setup script
+├── README.md                        # Main documentation
+├── TRAINING_GUIDE.md                # Fine-tuning guide
+├── QUICKSTART.md                    # Quick start guide
+├── LICENSE                          # MIT license
+├── examples/                        # Example scripts
 │   ├── simple_question.py
 │   ├── batch_questions.py
 │   └── compare_models.py
-└── README.md              # This file
+└── datasets/                        # Training datasets
+    ├── crypto_trading_complete_train.json
+    └── crypto_trading_complete_val.json
 ```
 
 ## Advanced Usage
@@ -318,20 +395,42 @@ response = llm.generate(
 
 ### Fine-tuning (Advanced)
 
-For custom cryptocurrency datasets, you can fine-tune using PEFT/LoRA:
+Train the model on your own cryptocurrency trading data:
 
-```python
-# Coming soon - fine-tuning guide
+```bash
+# Prepare your training dataset
+python prepare_training_data.py \
+  --custom-data my_strategies.json \
+  --output datasets/my_data.json \
+  --split
+
+# Fine-tune the model
+python finetune.py \
+  --dataset datasets/my_data_train.json \
+  --output ./my_custom_model \
+  --epochs 3
+
+# Use your fine-tuned model
+python crypto_llm.py --model ./my_custom_model
 ```
+
+**See [TRAINING_GUIDE.md](TRAINING_GUIDE.md) for complete instructions on:**
+- Creating training datasets
+- Fine-tuning parameters
+- Best practices
+- Trading-specific fine-tuning
+- Autonomous trading considerations
 
 ## Contributing
 
 Contributions are welcome! Areas for improvement:
 
 - Additional cryptocurrency knowledge and datasets
+- Trading strategies and technical analysis examples
+- Fine-tuning datasets for different trading styles
 - Support for more models
-- Fine-tuning scripts and guides
 - API server implementation
+- Reinforcement learning for autonomous trading
 - Mobile/web deployment guides
 
 ## Disclaimer

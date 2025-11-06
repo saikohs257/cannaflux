@@ -1,0 +1,166 @@
+{
+  "models": {
+    "mistral-7b-instruct": {
+      "name": "mistralai/Mistral-7B-Instruct-v0.2",
+      "type": "causal-lm",
+      "size_gb": 14,
+      "quantized_4bit_gb": 4.5,
+      "quantized_8bit_gb": 7.5,
+      "recommended_quantization": 4,
+      "description": "Mistral 7B fine-tuned for instruction following. Best balance of quality and performance.",
+      "pros": [
+        "Excellent performance for size",
+        "Good instruction following",
+        "Fast inference",
+        "Well-suited for Q&A"
+      ],
+      "cons": [
+        "Requires quantization for 6GB VRAM"
+      ],
+      "use_cases": [
+        "General Q&A",
+        "Cryptocurrency explanations",
+        "Technical analysis",
+        "Educational content"
+      ]
+    },
+    "phi-2": {
+      "name": "microsoft/phi-2",
+      "type": "causal-lm",
+      "size_gb": 5.5,
+      "quantized_4bit_gb": 2.0,
+      "quantized_8bit_gb": 3.0,
+      "recommended_quantization": 4,
+      "description": "Microsoft's 2.7B parameter model with strong reasoning capabilities.",
+      "pros": [
+        "Very fast inference",
+        "Low memory usage",
+        "Good reasoning ability",
+        "Can run without quantization on 6GB"
+      ],
+      "cons": [
+        "Smaller context window",
+        "Less knowledge than 7B models"
+      ],
+      "use_cases": [
+        "Quick responses",
+        "Basic crypto questions",
+        "Fast prototyping"
+      ]
+    },
+    "tinyllama": {
+      "name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "type": "causal-lm",
+      "size_gb": 2.2,
+      "quantized_4bit_gb": 1.0,
+      "quantized_8bit_gb": 1.5,
+      "recommended_quantization": 8,
+      "description": "1.1B parameter model, most memory efficient option.",
+      "pros": [
+        "Extremely fast",
+        "Very low memory usage",
+        "Good for experimentation",
+        "Can run on CPU efficiently"
+      ],
+      "cons": [
+        "Limited knowledge",
+        "Less accurate responses",
+        "Smaller vocabulary"
+      ],
+      "use_cases": [
+        "Testing and development",
+        "Low-resource environments",
+        "Simple Q&A"
+      ]
+    },
+    "zephyr-7b-beta": {
+      "name": "HuggingFaceH4/zephyr-7b-beta",
+      "type": "causal-lm",
+      "size_gb": 14,
+      "quantized_4bit_gb": 4.5,
+      "quantized_8bit_gb": 7.5,
+      "recommended_quantization": 4,
+      "description": "Mistral 7B fine-tuned with DPO for helpful, harmless responses.",
+      "pros": [
+        "Excellent chat quality",
+        "Helpful and safe responses",
+        "Good reasoning",
+        "Well-aligned"
+      ],
+      "cons": [
+        "Requires quantization for 6GB VRAM",
+        "Slower than base Mistral"
+      ],
+      "use_cases": [
+        "Conversational AI",
+        "Educational assistance",
+        "Safe content generation"
+      ]
+    },
+    "llama2-7b-chat": {
+      "name": "meta-llama/Llama-2-7b-chat-hf",
+      "type": "causal-lm",
+      "size_gb": 13.5,
+      "quantized_4bit_gb": 4.3,
+      "quantized_8bit_gb": 7.2,
+      "recommended_quantization": 4,
+      "description": "Meta's Llama 2 7B fine-tuned for chat. Requires HuggingFace access token.",
+      "pros": [
+        "Strong general knowledge",
+        "Good conversation ability",
+        "Well-documented",
+        "Wide community support"
+      ],
+      "cons": [
+        "Requires HF token",
+        "Requires quantization for 6GB VRAM",
+        "More restrictive license"
+      ],
+      "use_cases": [
+        "General purpose chat",
+        "Research and education",
+        "Crypto discussions"
+      ]
+    }
+  },
+  "quantization_methods": {
+    "4bit_nf4": {
+      "name": "4-bit NormalFloat",
+      "description": "Optimal for neural network weights, best quality for 4-bit",
+      "memory_reduction": "~75%",
+      "quality_loss": "Minimal (~2-3%)",
+      "recommended_for": "6GB VRAM with 7B models"
+    },
+    "8bit": {
+      "name": "8-bit Integer",
+      "description": "Higher quality quantization with moderate memory savings",
+      "memory_reduction": "~50%",
+      "quality_loss": "Very minimal (~1%)",
+      "recommended_for": "Higher quality responses, 6GB VRAM with smaller models"
+    }
+  },
+  "vram_requirements": {
+    "6gb": {
+      "recommended_models": [
+        "mistral-7b-instruct (4-bit)",
+        "zephyr-7b-beta (4-bit)",
+        "phi-2 (4-bit or 8-bit)"
+      ],
+      "max_model_size": "7B parameters with 4-bit quantization"
+    },
+    "4gb": {
+      "recommended_models": [
+        "phi-2 (4-bit)",
+        "tinyllama (4-bit or 8-bit)"
+      ],
+      "max_model_size": "3B parameters with 4-bit quantization"
+    },
+    "8gb": {
+      "recommended_models": [
+        "mistral-7b-instruct (8-bit)",
+        "llama2-7b-chat (8-bit)"
+      ],
+      "max_model_size": "7B parameters with 8-bit quantization"
+    }
+  }
+}
